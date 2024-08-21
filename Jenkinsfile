@@ -1,25 +1,29 @@
 pipeline {
-    agent any 
-
+    agent {
+        docker {
+            image 'maven:3.9.0'
+            args '-v /root/.m2:/root/.m2'
+        }
+    }
     stages {
-        stage('Stage 1') {
+        stage('Build') {
             steps {
-                echo 'This is Stage 1'
+                sh 'mvn -B -DskipTests clean package'
             }
         }
-        stage('Stage 2') {
+        stage('Test') {
             steps {
-                echo 'This is Stage 2'
+                sh 'mvn test'
+            }
+            post {
+                always {
+                    junit 'target/surefire-reports/*.xml'
+                }
             }
         }
-        stage('Stage 3') {
+        stage('Deliver') {
             steps {
-                echo 'This is Stage 3'
-            }
-        }
-        stage('Stage 4') {
-            steps {
-                echo 'This is Stage 4'
+                sh './jenkins/scripts/deliver.sh'
             }
         }
     }
