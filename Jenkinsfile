@@ -1,7 +1,7 @@
 pipeline {
     agent {
         node { 
-            label 'any'
+           // label 'any'
             checkout scm
             def pom = readMavenPom file: 'pom.xml'
         }   
