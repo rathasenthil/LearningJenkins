@@ -1,6 +1,8 @@
 pipeline {
     agent node { 
-        any 
+        label 'any'
+        stage checkout
+        checkout scm
         def pom = readMavenPom file: 'pom.xml'
         echo " pom - ${pom}"
         echo  "pom.name - ${pom.name}"
