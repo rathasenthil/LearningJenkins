@@ -1,14 +1,12 @@
 pipeline {
-    agent any
+    agent node { 
+        label: 'any' 
+        def pom = readMavenPom file: 'pom.xml'
+        echo " pom - ${pom}"
+        echo  "pom.name - ${pom.name}"
+        echo  "pom.version ${pom.version}"
+    }
     stages {
-        stage('Read pom file') {
-            steps {
-                def pom = readMavenPom file: 'pom.xml'
-                echo " pom - ${pom}"
-                echo  "pom.name - ${pom.name}"
-                echo  "pom.version ${pom.version}"
-            }   
-        }    
         
         stage('Build') {
             steps {
