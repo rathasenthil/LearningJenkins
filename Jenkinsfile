@@ -1,6 +1,6 @@
 pipeline {
     agent node { 
-        label: 'any' 
+        any 
         def pom = readMavenPom file: 'pom.xml'
         echo " pom - ${pom}"
         echo  "pom.name - ${pom.name}"
